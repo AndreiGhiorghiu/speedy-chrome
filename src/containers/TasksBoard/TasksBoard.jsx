@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TaskCard from "../../components/TaskCard";
 import CustomButton from '../../components/CustomButton';
+import { toast } from 'react-hot-toast';
 
 export default function TasksBoard() {
     const tasksArr = [
@@ -37,6 +38,7 @@ export default function TasksBoard() {
     ];
 
     const addToJiraHandler = () => {
+        toast.success("Hello World")
         console.log('Button clicked');
     };
 

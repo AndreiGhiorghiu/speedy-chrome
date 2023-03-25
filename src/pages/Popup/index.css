@@ -13,6 +13,10 @@ body {
   color: white;
 }
 
+*:focus {
+  outline: 0 !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -65,9 +65,9 @@ function TaskCard({ title, label,storyPoints, onDelete }) {
                         <Typography variant="h6" sx={{ flexGrow: 1, backgroundColor: 'transparent', color: 'white', fontSize: '18px' }}>
                             <input
                                 type="text"
-                                autocomplete="off"
-                                autofill="off"
-                                spellcheck="false"
+                                autoComplete="off"
+                                autoFill="off"
+                                spellCheck="false"
                                 value={editableTitle}
                                 onChange={handleTitleChange}
                                 className={styles.inpx}
