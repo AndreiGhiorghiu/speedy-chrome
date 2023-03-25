@@ -41,46 +41,6 @@ export default function ChatContainer() {
             id: 1,
             message: "Hey there! How can I help you?"
         },
-        {
-            id: 2,
-            message: "Who is Adrian’s manager?"
-        },
-        {
-            id: 3,
-            message: "Adrian’s manager is Dragos."
-        },
-        {
-            id: 4,
-            message: "Tomorrow we have planning."
-        },
-        {
-            id: 5,
-            message: "Got it."
-        },
-        {
-            id: 6,
-            message: "Adrian’s manager is Dragos."
-        },
-        {
-            id: 7,
-            message: "Tomorrow we have planning."
-        },
-        {
-            id: 8,
-            message: "Got it."
-        },
-        {
-            id: 9,
-            message: "Adrian’s manager is Dragos."
-        },
-        {
-            id: 10,
-            message: "Tomorrow we have planning."
-        },
-        {
-            id: 11,
-            message: "Final"
-        },
     ];
 
     return (
@@ -101,7 +61,12 @@ export default function ChatContainer() {
                     &bull; How many vacation days I have ?
                 </div>
             }
-            <Typography variant="h6" sx={{ position: 'fixed', display: 'flex', bottom: '70px', left: 0, right: 0, maxWidth: '90%', flexGrow: 1, backgroundColor: 'transparent', width: '100%', height: '40px', fontSize: '18px', margin: '1rem auto' }}>
+            <div style={{
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: '20px'
+            }}>
                 <input
                     type="text"
                     autoComplete="off"
@@ -110,10 +75,24 @@ export default function ChatContainer() {
                     value={chatInputValue}
                     placeholder={"Who is the Android developer?"}
                     onChange={handleChatInputChange}
-                    style={{height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px', margin: '1rem auto'}}
+                    style={{
+                        height: '40px', 
+                        margin: 0, 
+                        padding: 0, 
+                        color: 'white', 
+                        width: '100%', 
+                        backgroundColor: 'transparent', 
+                        fontSize: '16px',
+                        paddingLeft: '8px',
+                        paddingRight: '48px',
+                        marginLeft: '1rem',
+                        marginRight: '1rem',
+                        border: '1px solid white',
+                        borderRadius: '10px'
+                    }}
                 />
-                <SendSharpIcon sx={{marginTop: '25px', marginLeft: '-33px', rotate: '-40deg', cursor: 'pointer'}} onClick={handleChatSubmit}/>
-            </Typography>
+                <SendSharpIcon sx={{position: 'absolute', zIndex: 9, right: '22px', top: '6px', rotate: '-40deg', cursor: 'pointer'}} onClick={handleChatSubmit}/>
+            </div>
         </div>
     );
 }
