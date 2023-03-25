@@ -21,15 +21,6 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '2rem',
         fontSize: '1rem!important',
     },
-    button: {
-        margin: '1rem',
-        borderRadius: '10px',
-    },
-    uploadButton: {
-        backgroundColor: '#fff!important',
-        color: 'black',
-        width: '100%',
-    },
     continueButton: {
         backgroundColor: '#E15100!important',
         color: '#fff!important',
@@ -39,6 +30,21 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         bottom: '4rem',
     },
+    chooseFileButton: {
+        margin: '1rem',
+        borderRadius: '10px',
+        height: '40px',
+        backgroundColor: '#fff!important',
+        color: 'black',
+        width: 'calc(100% - 32px)',
+        lineHeight: '38px',
+        fontSize: '15px',
+        cursor: 'pointer',
+        paddingLeft: '16px',
+        paddingRight: '16px',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    }
 }));
 
 function FeedContainer() {
@@ -47,6 +53,8 @@ function FeedContainer() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [editableTitle, setEditableTitle] = useState('');
 
+    const [uploadButtonTitle, setUploadButtonTitle] = useState('Upload Meeting Transcript');
+
     const handleTitleChange = (event) => {
         setEditableTitle(event.target.value);
     };
@@ -54,6 +62,13 @@ function FeedContainer() {
     const onContinueHandler = () => {
         setIsContinueBtnClicked(true);
     }
+
+    const handleFileChange = (e) => {
+        if (e.target.files) {
+            let file = e.target.files[0];
+            setUploadButtonTitle(file.name);
+        }
+    };
 
     return (
         !isLoading ?
@@ -79,13 +94,11 @@ function FeedContainer() {
                     <Typography variant="body2" style={{margin: '1rem 0 0 0'}}>
                         OR
                     </Typography>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={`${classes.button} ${classes.uploadButton}`}
-                    >
-                        Upload Transcript File
-                    </Button>
+                    
+                    <input onChange={handleFileChange} type="file" id="actual-btn" hidden/>
+                    <label className={classes.chooseFileButton} for="actual-btn">
+                        {uploadButtonTitle}
+                    </label>
                 </div>
 
                 <Button
