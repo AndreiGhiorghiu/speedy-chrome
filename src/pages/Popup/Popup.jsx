@@ -1,27 +1,30 @@
-import React from 'react';
-import logo from '../../assets/img/logo.svg';
-import Greetings from '../../containers/Greetings/Greetings';
+import * as React from 'react';
 import './Popup.css';
+import BottomMenu from "../../components/StickyBottomNavigation";
+import StickyHeader from "../../components/StickyHeader";
+import Login from "../../components/LogIn";
+import ChatContainer from "../../containers/ChatContainer/ChatContainer";
+import SpeedyBoard from "../../containers/TasksBoard/TasksBoard";
+import SettingsContainer from "../../containers/SettingsContainer/SettingsContainer";
 
 const Popup = () => {
   // const url = chrome.extension.getURL('options.html');
+    const [selected, setSelected] = React.useState(0);
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+        setSelected(newValue);
+    };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/Popup/Popup.jsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href={chrome.runtime.getURL('options.html')}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React!
-        </a>
-      </header>
+        <StickyHeader title={'SPEEDY'}/>
+        {/*<Login />*/}
+            {selected === 0 && <ChatContainer/>}
+            {selected === 1 && <SpeedyBoard/>}
+            {selected === 2 && <SettingsContainer/>}
+      <BottomMenu onSelect={handleChange} selectedValue={value} />
     </div>
   );
 };
