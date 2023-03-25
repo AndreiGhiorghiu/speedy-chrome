@@ -16,7 +16,10 @@ const useStyles = makeStyles({
         color: '#EA5254',
     },
     selected: {
-        borderTop: '2px solid #EA5254',
+        borderTop: '2px solid #EA5254 !important',
+    },
+    unselected: {
+        borderTop: '1px solid #3C3C3C',
     },
 });
 
@@ -33,18 +36,21 @@ function BottomMenu(props) {
             <BottomNavigationAction
                 icon={<Chat className={classes.icon} />}
                 classes={{
+                    root: classes.unselected,
                     selected: classes.selected,
                 }}
             />
             <BottomNavigationAction
                 icon={<Task className={classes.icon} />}
                 classes={{
+                    root: classes.unselected,
                     selected: classes.selected,
                 }}
             />
             <BottomNavigationAction
                 icon={<Settings className={classes.icon} />}
                 classes={{
+                    root: classes.unselected,
                     selected: classes.selected,
                 }}
             />

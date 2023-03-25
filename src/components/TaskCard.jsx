@@ -6,7 +6,6 @@ import React from 'react';
 
 const useStyles = makeStyles({
     label: {
-        backgroundColor: '#EA5254',
         paddingTop: '0.2rem',
         paddingBottom: '0.2rem',
         paddingLeft: '1rem',
@@ -49,13 +48,36 @@ const useStyles = makeStyles({
     }
 });
 
-function TaskCard({ title, label,storyPoints, onDelete }) {
+function TaskCard({ title, label,storyPoints, onDelete, onChange }) {
     const styles = useStyles();
     const [editableTitle, setEditableTitle] = useState(title);
 
     const handleTitleChange = (event) => {
         setEditableTitle(event.target.value);
+        onChange(event.target.value);
     };
+
+    function labelToColor(label) {
+        switch(label) {
+            case 'Strategy':
+                return '#00E7C1';
+            
+            case 'Product':
+                return '#FFE62E';
+            
+            case 'Experience':
+                return '#EA5254';
+            
+            case 'Engineering':
+                return '#0098FE';
+            
+            case 'Data':
+                return 'rgb(113, 198, 177)';
+                
+            default:
+                return '#EA5254';
+        }
+    }
 
     return (
         <Card sx={{ boxShadow: 4 }} className={styles.card}>
@@ -65,9 +87,9 @@ function TaskCard({ title, label,storyPoints, onDelete }) {
                         <Typography variant="h6" sx={{ flexGrow: 1, backgroundColor: 'transparent', color: 'white', fontSize: '18px' }}>
                             <input
                                 type="text"
-                                autocomplete="off"
-                                autofill="off"
-                                spellcheck="false"
+                                autoComplete="off"
+                                autoFill="off"
+                                spellCheck="false"
                                 value={editableTitle}
                                 onChange={handleTitleChange}
                                 className={styles.inpx}
@@ -81,7 +103,7 @@ function TaskCard({ title, label,storyPoints, onDelete }) {
             />
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 2, paddingRight: 2, paddingBottom: 2 }}>
                 <Typography variant="body2" className={styles.storyPoints}>{storyPoints}</Typography>
-                <Typography variant="body2" className={styles.label}>{label}</Typography>
+                <Typography variant="body2" className={styles.label} style={{backgroundColor: labelToColor(label)}}>{label}</Typography>
             </Box>
         </Card>
     );

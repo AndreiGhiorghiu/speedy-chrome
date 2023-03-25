@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Logo from '../assets/img/logo.png';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     footer: {
         position: 'absolute',
-        bottom: '4rem',
+        bottom: '2rem',
     },
 }));
 
@@ -59,7 +60,9 @@ function Login() {
                 Log in with Monday
             </Button>
             <Typography variant="body2" component="footer" className={classes.footer}>
-                Publicis Sapient
+                <img style={{
+                    height: '100px',
+                }} src={chrome.runtime.getURL(Logo)}/>
             </Typography>
         </div>
     );

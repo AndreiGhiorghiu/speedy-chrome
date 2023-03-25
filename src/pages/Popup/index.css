@@ -13,7 +13,21 @@ body {
   color: white;
 }
 
+*:focus {
+  outline: 0 !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+div::-webkit-scrollbar {
+  width: 5px;
+  margin-right: 3px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 6px;
 }
