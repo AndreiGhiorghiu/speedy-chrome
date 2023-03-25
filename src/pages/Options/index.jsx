@@ -1,9 +1,9 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDom from 'react-dom';
 
 import Options from './Options';
 import './index.css';
 
 const container = document.getElementById('app-container');
-const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(<Options title={'Settings'} />);
+
+ReactDom.render(<Options title={'Settings'} />, container);
