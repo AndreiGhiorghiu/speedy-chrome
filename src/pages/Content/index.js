@@ -1,6 +1,16 @@
-import { printLine } from './modules/print';
+import React from 'react';
+import Chat from './Chat';
+import ReactDom from 'react-dom';
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
+function init() {
+  const el = document.createElement('div');
+  el.setAttribute('className', 'speedyRoot');
 
-printLine("Using the 'printLine' function from the Print Module");
+  if (document) {
+    document.querySelector('body').appendChild(el);
+
+    ReactDom.render(<Chat />, el);
+  }
+}
+
+init();

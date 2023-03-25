@@ -3,7 +3,7 @@
   "name": "Speedy",
   "description": "",
   "options_page": "options.html",
-  "background": { "service_worker": "background.bundle.js" },
+  "background": { "service_worker": "background.bundle.js", "type": "module" },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
@@ -14,7 +14,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
     }
@@ -22,8 +23,30 @@
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
-      "matches": []
+      "resources": [
+        "contentScript.bundle.js",
+        "content.styles.css",
+        "icon-128.png",
+        "icon-34.png"
+      ],
+      "matches": ["<all_urls>"]
     }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "tabs",
+    "clipboardWrite",
+    "storage",
+    "activeTab",
+    "bookmarks",
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "identity",
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "downloads"
   ]
 }
