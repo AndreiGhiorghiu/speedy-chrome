@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1rem!important',
     },
     continueButton: {
-        backgroundColor: '#E15100!important',
+        backgroundColor: '#EA5254!important',
         color: '#fff!important',
         width: 'fit-content',
     },

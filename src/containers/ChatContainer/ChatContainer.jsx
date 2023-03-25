@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { makeStyles } from '@mui/styles';
-import ChatTile from '../../components/ChatTile';
 import Typography from "@mui/material/Typography";
 import {useState} from "react";
+import SendSharpIcon from '@mui/icons-material/SendSharp';
+import ChatTile from '../../components/ChatTile';
 
 const useStyles = makeStyles({
     popup: {
@@ -29,6 +30,10 @@ export default function ChatContainer() {
 
     const handleChatInputChange = (event) => {
         setChatInputValue(event.target.value);
+    };
+
+    const handleChatSubmit = () => {
+      console.log("handle chat submit");
     };
 
     const chatMessages = [
@@ -96,7 +101,7 @@ export default function ChatContainer() {
                     &bull; How many vacation days I have ?
                 </div>
             }
-            <Typography variant="h6" sx={{ position: 'fixed', bottom: '70px', left: 0, right: 0, maxWidth: '90%', flexGrow: 1, backgroundColor: 'transparent', width: '100%', height: '40px', fontSize: '18px', margin: '1rem auto' }}>
+            <Typography variant="h6" sx={{ position: 'fixed', display: 'flex', bottom: '70px', left: 0, right: 0, maxWidth: '90%', flexGrow: 1, backgroundColor: 'transparent', width: '100%', height: '40px', fontSize: '18px', margin: '1rem auto' }}>
                 <input
                     type="text"
                     autoComplete="off"
@@ -107,6 +112,7 @@ export default function ChatContainer() {
                     onChange={handleChatInputChange}
                     style={{height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px', margin: '1rem auto'}}
                 />
+                <SendSharpIcon sx={{marginTop: '25px', marginLeft: '-33px', rotate: '-40deg', cursor: 'pointer'}} onClick={handleChatSubmit}/>
             </Typography>
         </div>
     );
