@@ -2,7 +2,7 @@ import * as React from 'react';
 import TaskCard from "../../components/TaskCard";
 import CustomButton from '../../components/CustomButton';
 
-export default function SpeedyBoard() {
+export default function TasksBoard() {
     const tasksArr = [
         {
             id: 1,
