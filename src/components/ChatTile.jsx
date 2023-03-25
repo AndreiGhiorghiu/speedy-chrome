@@ -8,7 +8,7 @@ const useStyles = makeStyles({
         display: 'flex',
         marginBottom: '5px',
         alignItems: 'center',
-        margin: '1rem'
+        margin: '0 1rem',
     },
     reversed: {
         flexDirection: 'row-reverse',

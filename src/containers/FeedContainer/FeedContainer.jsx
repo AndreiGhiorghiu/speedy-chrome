@@ -51,12 +51,12 @@ function FeedContainer() {
     const classes = useStyles();
     const [isContinueBtnClicked, setIsContinueBtnClicked] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
-    const [editableTitle, setEditableTitle] = useState('');
+    const [feedChat, setFeedChat] = useState('');
 
     const [uploadButtonTitle, setUploadButtonTitle] = useState('Upload Meeting Transcript');
 
-    const handleTitleChange = (event) => {
-        setEditableTitle(event.target.value);
+    const handleFeedChange = (event) => {
+        setFeedChat(event.target.value);
     };
 
     const onContinueHandler = () => {
@@ -85,16 +85,16 @@ function FeedContainer() {
                             autoComplete="off"
                             autoFill="off"
                             spellCheck="false"
-                            value={editableTitle}
+                            value={feedChat}
                             placeholder={"Create a task for the login screen ..."}
-                            onChange={handleTitleChange}
+                            onChange={handleFeedChange}
                             style={{height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px'}}
                         />
                     </Typography>
                     <Typography variant="body2" style={{margin: '1rem 0 0 0'}}>
                         OR
                     </Typography>
-                    
+
                     <input onChange={handleFileChange} type="file" id="actual-btn" hidden/>
                     <label className={classes.chooseFileButton} for="actual-btn">
                         {uploadButtonTitle}
