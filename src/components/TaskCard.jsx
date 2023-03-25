@@ -7,14 +7,18 @@ import React from 'react';
 const useStyles = makeStyles({
     label: {
         backgroundColor: '#EA5254',
-        padding: '0.2rem',
+        paddingTop: '0.2rem',
+        paddingBottom: '0.2rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
         borderRadius: '8px',
     },
 
     storyPoints: {
         borderRadius: '50%',
-        width: '20px',
-        height: '20px',
+        width: '24px',
+        height: '24px',
+        lineHeight: '24px',
         backgroundColor: 'white',
         color: 'black',
         padding: '0.2rem',
@@ -26,6 +30,22 @@ const useStyles = makeStyles({
         margin: '1rem',
         border: '1px solid white',
         borderRadius: '10px',
+    },
+    inpx: {
+        border: 'none', 
+        fontSize: 'inherit', 
+        fontWeight: 'inherit', 
+        width: '90%', 
+        marginRight: '10%',
+        backgroundColor: 'transparent', 
+        color: 'white',
+        paddingLeft: 0,
+        marginLeft: 0,
+        borderBottom: '0.25px solid white',
+        paddingBottom: '5px',
+        "&:focus": {
+            outline: 0
+        }
     }
 });
 
@@ -45,9 +65,12 @@ function TaskCard({ title, label,storyPoints, onDelete }) {
                         <Typography variant="h6" sx={{ flexGrow: 1, backgroundColor: 'transparent', color: 'white', fontSize: '18px' }}>
                             <input
                                 type="text"
+                                autocomplete="off"
+                                autofill="off"
+                                spellcheck="false"
                                 value={editableTitle}
                                 onChange={handleTitleChange}
-                                style={{ border: 'none', fontSize: 'inherit', fontWeight: 'inherit', width: '100%', backgroundColor: 'transparent', color: 'white' }}
+                                className={styles.inpx}
                             />
                         </Typography>
                         <IconButton onClick={onDelete}>
@@ -56,7 +79,7 @@ function TaskCard({ title, label,storyPoints, onDelete }) {
                     </Box>
                 }
             />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 2, paddingRight: 2, paddingBottom: 2 }}>
                 <Typography variant="body2" className={styles.storyPoints}>{storyPoints}</Typography>
                 <Typography variant="body2" className={styles.label}>{label}</Typography>
             </Box>

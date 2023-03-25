@@ -8,31 +8,31 @@ export default function SpeedyBoard() {
             id: 1,
             title: "Complete react project",
             label: "Urgent",
-            storyPoints: "3p"
+            storyPoints: "3P"
         },
         {
             id: 2,
             title: "Complete react project",
             label: "Urgent",
-            storyPoints: "3p"
+            storyPoints: "3P"
         },
         {
             id: 3,
             title: "Complete react project",
             label: "Urgent",
-            storyPoints: "3p"
+            storyPoints: "3P"
         },
         {
             id: 4,
             title: "Complete react project",
             label: "Urgent",
-            storyPoints: "3p"
+            storyPoints: "3P"
         },
         {
             id:5,
             title: "Complete react project",
             label: "Urgent",
-            storyPoints: "3p"
+            storyPoints: "3P"
         }
     ];
 
