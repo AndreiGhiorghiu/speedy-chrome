@@ -30,6 +30,7 @@ const Popup = () => {
   on('LOGOUT', () => {
     setIsLoggedIn(false);
     setSelected(0);
+    setValue(0);
   });
 
   React.useEffect(() => {
