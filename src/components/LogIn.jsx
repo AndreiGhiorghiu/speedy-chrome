@@ -68,7 +68,7 @@ function Login() {
                     value={urlValue}
                     placeholder={"example.atlassian.net"}
                     onChange={handleUrlChange}
-                    style={{textAlign: 'center', height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px'}}
+                    style={{height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px'}}
                 />
             </Typography>
             <Button
