@@ -29,6 +29,7 @@ const Popup = () => {
 
   on('LOGOUT', () => {
     setIsLoggedIn(false);
+    setSelected(0);
   });
 
   React.useEffect(() => {
