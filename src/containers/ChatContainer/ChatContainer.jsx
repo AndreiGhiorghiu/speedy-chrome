@@ -5,6 +5,10 @@ import { useState } from 'react';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import ChatTile from '../../components/ChatTile';
 
+import store from '$store';
+import axios from 'axios';
+import config from '../../config';
+
 const useStyles = makeStyles({
   popup: {
     position: 'absolute',
@@ -29,7 +33,7 @@ export default function ChatContainer() {
 
   const [chatMessages, setChatMessages] = useState([
     {
-      id: 1,
+      id: 0,
       message: 'Hey there! How can I help you?',
       typing: false,
     },
@@ -62,28 +66,44 @@ export default function ChatContainer() {
     }
   };
 
-  function submitChatMessage() {
+  async function submitChatMessage() {
     if (!canSendMessage) return;
 
-    setChatMessages([
+    await setChatMessages([
       ...chatMessages,
       {
-        id: chatMessages.length + 1,
+        id: chatMessages.length,
         message: chatInputValue,
         typing: false,
       },
       {
-        id: chatMessages.length + 2,
+        id: chatMessages.length + 1,
         message: 'empty',
         typing: true,
       },
     ]);
-    setCanSendMessage(false);
-    setChatInputValue('');
+    
+    let inpValue = chatInputValue;
 
-    // call
-    // update last chat with typing false and response
-    // setCanSendMessage(true);
+    await setCanSendMessage(false);
+    await setChatInputValue('');
+
+
+    try {
+        //const response = await axios.post(`${config.API_URL}/ask/${store.get('project')}`, {question: inpValue}, {timeout: 60000});
+
+        const msgArr = [...chatMessages];
+        //msgArr[msgArr.length - 1].typing = false;
+      
+        await setChatMessages(msgArr);
+
+        await setCanSendMessage(true);
+    }
+    catch {
+        // _messages[_messages.length - 1].message = "Error.";
+        // _messages[_messages.length - 1].typing = false;
+        // setCanSendMessage(true);
+    }
   }
 
   return (
@@ -99,7 +119,7 @@ export default function ChatContainer() {
       <div style={{ height: 'calc(100vh - 210px)', overflowY: 'scroll' }}>
         {chatMessages.map((elem, index) => (
           <ChatTile
-            key={index}
+            key={elem.id}
             title={elem.message}
             typing={elem.typing}
             left={index % 2 == 0 ? true : false}
