@@ -48,9 +48,10 @@ export default function ChatContainer() {
 
   const [canSendMessage, setCanSendMessage] = useState(true);
 
-  const [test, setTest] = useState('initial');
-  const [firstCopyArr, setFirstCopyArr] = useState(false);
-  const [secondCopyArray, setSecondCopyArray] = useState(false);
+  const [shouldAddMyMessage, setShouldAddMyMessage] = useState(false);
+  const [shouldAddNewMessage, setShouldAddNewMessage] = useState(false);
+
+  const [receivedResponse, setReceivedResponse] = useState('');
 
   React.useEffect(() => {
     scrollToBottom();
@@ -72,71 +73,64 @@ export default function ChatContainer() {
 
   async function submitChatMessage() {
     if (!canSendMessage) return;
+    if (chatInputValue.length < 2) return;
 
-
-setTest('update');
-
-     // setChatMessages(firrstCopyArr);
-      setFirstCopyArr(true);
+    setShouldAddMyMessage(true);
     
     let inpValue = chatInputValue;
 
     await setCanSendMessage(false);
     await setChatInputValue('');
 
-
     try {
         const response = await axios.post(`${config.API_URL}/ask/${store.get('project')}`, {question: inpValue}, {timeout: 60000});
-        setSecondCopyArray(true);
+        
+        if (response.status == 200) {
+          setReceivedResponse(response.data.data);
+        } else {
+          setReceivedResponse('Error. Try again.');
+        }
+
+        setShouldAddNewMessage(true);
         await setCanSendMessage(true);
     }
     catch {
-        // _messages[_messages.length - 1].message = "Error.";
-        // _messages[_messages.length - 1].typing = false;
-        // setCanSendMessage(true);
+      setReceivedResponse('Error. Try again.');
+      setShouldAddNewMessage(true);
+      setCanSendMessage(true);
     }
   }
 
   React.useEffect(() => {
-      let shallowCopy = chatMessages.map((elem, index) => {
-          return {
-              id: elem.id,
-              message : elem.message,
-              typing: elem.typing
-          }
+    if (!shouldAddMyMessage) return;
 
-      });
+    setChatMessages([
+      ...chatMessages,
+      {
+        id: chatMessages.length,
+        message: chatInputValue,
+        typing: false,
+      },
+      {
+        id: chatMessages.length + 1,
+        message: 'empty',
+        typing: true,
+      }
+    ]);
 
-      shallowCopy.push({
-              id: chatMessages.length,
-              message: chatInputValue,
-              typing: false,
-          },
-          {
-              id: chatMessages.length + 1,
-              message: 'empty',
-              typing: true,
-          });
-      setChatMessages(shallowCopy);
-
-  }, [firstCopyArr]);
+    setShouldAddMyMessage(false);
+  }, [shouldAddMyMessage]);
 
   React.useEffect(() => {
-      let shallowCopy = chatMessages.map((elem, index) => {
-          return {
-              id: elem.id,
-              message : elem.message,
-              typing: elem.typing
-          }
+    if (!shouldAddNewMessage) return;
 
-      });
-      shallowCopy[shallowCopy.length - 1].typing = false;
-      setChatMessages(shallowCopy);
-  }, [secondCopyArray])
+    let shallowCopy = [...chatMessages];
+    shallowCopy[shallowCopy.length - 1].message = receivedResponse;
+    shallowCopy[shallowCopy.length - 1].typing = false;
 
-  React.useEffect(() => {
-      console.log("use effect = ", chatMessages);
-  }, [chatMessages])
+    setChatMessages(shallowCopy);
+    setShouldAddNewMessage(false);
+  }, [shouldAddNewMessage])
 
   return (
     <div
@@ -168,7 +162,6 @@ setTest('update');
           &bull; How many vacation days I have ?
         </div>
       )}
-        <div>{test.toUpperCase()}</div>
       <div
         style={{
           position: 'relative',
