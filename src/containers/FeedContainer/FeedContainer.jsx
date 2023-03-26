@@ -4,7 +4,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TasksBoard from '../TasksBoard/TasksBoard'
 import { CircularProgress } from '@mui/material';
+import { toast } from 'react-hot-toast';
 
+import axios from 'axios';
+import config from '../../config';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -53,27 +56,59 @@ function FeedContainer() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [feedChat, setFeedChat] = useState('');
 
+    const [fileToUpload, setFileToUpload] = useState(null);
+    
+    const [tasksResponse, setTasksResponse] = useState([]);
+
     const [uploadButtonTitle, setUploadButtonTitle] = useState('Upload Meeting Transcript');
 
     const handleFeedChange = (event) => {
         setFeedChat(event.target.value);
     };
 
-    const onContinueHandler = () => {
-        setIsContinueBtnClicked(true);
+    const onContinueHandler = async () => {
+        if(feedChat.length > 1) {
+            
+        } else if(fileToUpload != null) {
+            const form = new FormData();
+            form.append('my_file', fileToUpload);
+
+            setIsLoading(true);
+            try {
+                const response = await axios.post(`${config.API_URL}/train`, form);
+                
+                setIsLoading(false);
+
+                if(response.data.length > 0) {
+                    setTasksResponse(response.data);
+                    setIsContinueBtnClicked(true);
+                } else {
+                    toast.error("I couldn't generate any tasks.")
+                }
+            }
+            catch (_) {
+                setIsLoading(false);
+                toast.error("Something went wrong.");
+            }
+        } else {
+            toast.error("Please input some data.");
+        }
     }
 
     const handleFileChange = (e) => {
         if (e.target.files) {
             let file = e.target.files[0];
-            setUploadButtonTitle(file.name);
+            if (file) {
+                setUploadButtonTitle(file.name);
+                setFileToUpload(file);
+            }
         }
     };
 
     return (
         !isLoading ?
         <>
-        {isContinueBtnClicked ? <TasksBoard /> : (
+        {isContinueBtnClicked ? <TasksBoard tasks={tasksResponse} /> : (
             <div className={classes.container}>
                 <Typography variant="h4" component="h6" className={classes.title}>
                     I’m here to help you with the tasks.<br/>Please tell me what are your ideas<br/>or give me a meeting transcript

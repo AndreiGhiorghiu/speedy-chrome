@@ -34,8 +34,8 @@ const useStyles = makeStyles({
         border: 'none', 
         fontSize: 'inherit', 
         fontWeight: 'inherit', 
-        width: '90%', 
-        marginRight: '10%',
+        width: '97%', 
+        marginRight: '3%',
         backgroundColor: 'transparent', 
         color: 'white',
         paddingLeft: 0,
@@ -83,8 +83,8 @@ function TaskCard({ title, label,storyPoints, onDelete, onChange }) {
         <Card sx={{ boxShadow: 4 }} className={styles.card}>
             <CardHeader
                 title={
-                    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: 'transparent', color: 'white' }}>
-                        <Typography variant="h6" sx={{ flexGrow: 1, backgroundColor: 'transparent', color: 'white', fontSize: '18px' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'transparent', color: 'white' }}>
+                        <Typography variant="h6" sx={{ flexGrow: 1, backgroundColor: 'transparent', color: 'white', fontSize: '16px' }}>
                             <input
                                 type="text"
                                 autoComplete="off"
@@ -95,7 +95,7 @@ function TaskCard({ title, label,storyPoints, onDelete, onChange }) {
                                 className={styles.inpx}
                             />
                         </Typography>
-                        <IconButton onClick={onDelete}>
+                        <IconButton onClick={onDelete} sx={{paddingRight: 0}}>
                             <Delete sx={{ fill: 'white' }}/>
                         </IconButton>
                     </Box>
