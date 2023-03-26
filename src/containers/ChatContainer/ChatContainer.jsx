@@ -44,7 +44,7 @@ export default function ChatContainer() {
     ];
 
     return (
-        <div style={{position:'relative', height: 'fit-content', flex: 1, paddingBottom: '70px', margin: '1rem 0'}}>
+        <div style={{position:'relative', height: 'fit-content', flex: 1, paddingBottom: '66px', margin: '1rem 0'}}>
             <div style={{height: 'calc(100vh - 210px)', overflowY: 'scroll'}}>
                 {chatMessages.map((elem, index) => (<ChatTile
                     title={elem.message}
