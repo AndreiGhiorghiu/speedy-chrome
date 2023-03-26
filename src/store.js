@@ -1,5 +1,6 @@
 import { get as $get, set as $set, merge } from 'lodash';
 import { create } from 'zustand';
+import { emit } from '$events';
 
 const zustand = create(() => ({
   user: null,
@@ -52,7 +53,10 @@ export const store = {
 };
 
 chrome?.storage?.local?.get?.('SP_STORE', (res) => {
+  console.log('res.SP_STORE', res.SP_STORE);
   store.update(res.SP_STORE);
+  emit('SET_PROJECTS', res.SP_STORE.projects);
+  emit('SET_PROJECT', res.SP_STORE.project);
 });
 
 export default store;

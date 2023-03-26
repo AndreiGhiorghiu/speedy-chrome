@@ -10,27 +10,27 @@ jira.checkAuth = async () => {
 };
 
 jira.pushIssue = async (data) => {
-  const response = fetch(
-    'https://aspirespeedy.atlassian.net/rest/api/2/issue',
-    {
-      method: 'POST',
-      headers: {},
-      redirect: 'follow',
+  const response = await fetch(`${store.get('url')}/rest/api/2/issue`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
 
-      body: JSON.stringify({
-        fields: {
-          project: {
-            key: data.projectName,
-          },
-          summary: data.title,
-          description: data.description,
-          issuetype: {
-            name: 'Task',
-          },
+    body: JSON.stringify({
+      fields: {
+        project: {
+          key: store.get('project'),
         },
-      }),
-    }
-  );
+        summary: data.title || '',
+        description: data.description || '',
+        issuetype: {
+          name: 'Task',
+        },
+        labels: [data.label || ''],
+      },
+    }),
+  });
 
   return response.json();
 };

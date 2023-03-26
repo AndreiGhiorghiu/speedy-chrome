@@ -51,32 +51,32 @@ function Login() {
     if (urlValue.length > 1) {
       try {
         var url = urlValue;
-        url = url.replace("https://", "");
-        url = url.replace("http://", "");
-        url = url.replace("/", "");
-        url = url.replace("www.", "");
-        url = `https://${url}`
+        url = url.replace('https://', '');
+        url = url.replace('http://', '');
+        url = url.replace('/', '');
+        url = url.replace('www.', '');
+        url = `https://${url}`;
 
         store.set('url', url);
         const data = await jira.checkAuth();
 
         if (data?.accountId) {
-            store.set('user', data);
+          store.set('user', data);
 
-            jira.getProjects().then((reply) => {
+          jira.getProjects().then((reply) => {
             const data = reply?.items?.map?.((item) => ({
-                title: item.title,
-                id: item.attributes.projectKey,
+              title: item.title,
+              id: item.attributes.projectKey,
             }));
 
             store.set('projects', data || []);
             store.set('project', data?.[0]?.id);
+
+            chrome?.storage?.local?.set({ SP_STORE: store.data }, () => {
+              emit('LOGIN', data);
             });
-
-            emit('LOGIN', data);
+          });
         }
-
-        chrome?.storage?.local?.set({ SP_STORE: store.data });
       } catch (_) {
         toast.error('Cannot retrieve session. Are you logged in?');
       }

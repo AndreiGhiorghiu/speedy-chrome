@@ -1,4 +1,5 @@
 const events = new Map();
+import store from '$store';
 
 function emit(event, data) {
   const handlers = events.get(event);
@@ -12,6 +13,8 @@ function emit(event, data) {
           emit('ERROR', error);
         }
       }
+
+      chrome?.storage?.local?.set({ SP_STORE: store.data });
     }, 0);
   }
 }

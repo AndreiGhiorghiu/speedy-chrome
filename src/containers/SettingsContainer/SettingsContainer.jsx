@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, MenuItem, Select } from '@mui/material';
 import ExpandMoreSharpIcon from '@mui/icons-material/ExpandMoreSharp';
 import store from '$store';
-import { emit } from '$events';
+import { emit, on } from '$events';
 import jira from '$apis/jira';
 import { toast } from 'react-hot-toast';
 
@@ -17,6 +17,15 @@ const SettingsContainer = () => {
   const [selectedProject, setSelectedProject] = useState(projectOptions[0]);
   const [projects, setProjects] = useState([]);
 
+  on('SET_PROJECTS', (data) => {
+    setProjects(data);
+  });
+
+  on('SET_PROJECT', (data) => {
+    console.log('data', data);
+    setSelectedProject(data);
+  });
+
   useEffect(() => {
     setProjects(store.get('projects'));
     setSelectedProject(store.get('project'));
@@ -28,7 +37,8 @@ const SettingsContainer = () => {
 
   const handleButtonClick = () => {
     store.set('project', selectedProject);
-    toast.success("Project changed.")
+    emit('SET_PROJECT', selectedProject);
+    toast.success('Project changed.');
   };
 
   const handleLogout = () => {
