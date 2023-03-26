@@ -42,7 +42,7 @@ const Popup = () => {
   return (
     <div className="App">
       <Toaster position="top-right" />
-      <StickyHeader title={'SPEEDY'} />
+      <StickyHeader isLoggedIn={isLoggedIn} />
       {(!isLoggedIn && <Login />) || (
         <>
           {selected === 0 && <ChatContainer />}

@@ -5,7 +5,7 @@ import store from '$store';
 
 import NewLogo from '../assets/img/newlogo.png';
 
-const StickyHeader = ({ title }) => {
+const StickyHeader = ({isLoggedIn}) => {
   const [projectName, setProjectName] = useState('');
 
   on('SET_PROJECT', (projectId) => {
@@ -49,7 +49,7 @@ const StickyHeader = ({ title }) => {
           color: 'rgba(159, 165, 174, .6)',
         }}
       >
-        {projectName}
+        {isLoggedIn ? (projectName || 'Speedy Assistant') : "Speedy Assistant"}
       </span>
     </AppBar>
   );
