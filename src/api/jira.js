@@ -1,11 +1,10 @@
 import { method } from 'lodash';
+import store from '$store';
 
 const jira = {};
 
 jira.checkAuth = async () => {
-  const response = await fetch(
-    'https://tremend.atlassian.net/rest/api/2/myself'
-  );
+  const response = await fetch(`${store.get('url')}/rest/api/2/myself`);
 
   return response.json();
 };
@@ -38,10 +37,12 @@ jira.pushIssue = async (data) => {
 
 jira.getProjects = async () => {
   const response = await fetch(
-    'https://aspirespeedy.atlassian.net/rest/internal/2/productsearch/search?counts=boards%3D5%2Cdashboards%3D5%2Cprojects%3D5%2Cfilters%3D5&type=boards%2Cdashboards%2Cprojects%2Cfilters'
+    `${store.get(
+      'url'
+    )}/rest/internal/2/productsearch/search?counts=boards%3D5%2Cdashboards%3D5%2Cprojects%3D5%2Cfilters%3D5&type=boards%2Cdashboards%2Cprojects%2Cfilters`
   );
 
-  const data = response.json();
+  const data = await response.json();
   const projects = data.find((item) => item.id === 'quick-search-projects');
 
   return projects;
