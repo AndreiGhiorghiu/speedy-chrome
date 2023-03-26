@@ -27,6 +27,9 @@ jira.pushIssue = async (data) => {
         issuetype: {
           name: 'Task',
         },
+        customfield_10034: {
+          value: data.storyPoints || '',
+        },
         labels: [data.label || ''],
       },
     }),

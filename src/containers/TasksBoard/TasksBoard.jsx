@@ -13,15 +13,19 @@ export default function TasksBoard(props) {
     props.setLoading(true);
 
     try {
-        await Promise.all(
-            tasks.map((task) =>
-              jira.pushIssue({ title: task.title, label: task.label })
-            )
-        );
+      await Promise.all(
+        tasks.map((task) =>
+          jira.pushIssue({
+            title: task.title,
+            label: task.label,
+            storyPoints: task.storyPoints,
+          })
+        )
+      );
 
-        toast.success('Tasks added!');
+      toast.success('Tasks added!');
     } catch (_) {
-        toast.error('Something went wrong!');
+      toast.error('Something went wrong!');
     }
 
     props.onTasksFinished();
