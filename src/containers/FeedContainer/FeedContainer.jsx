@@ -9,6 +9,8 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import config from '../../config';
 
+import store from '$store';
+
 const useStyles = makeStyles((theme) => ({
     container: {
         display: 'flex',
@@ -75,7 +77,7 @@ function FeedContainer() {
 
             setIsLoading(true);
             try {
-                const response = await axios.post(`${config.API_URL}/train`, form);
+                const response = await axios.post(`${config.API_URL}/train/${store.get('project')}`, form, {timeout: 60000});
                 
                 setIsLoading(false);
 
@@ -105,10 +107,23 @@ function FeedContainer() {
         }
     };
 
+    function setLoading(ldn) {
+        setIsLoading(ldn);
+    }
+
+    function handleTasksAdded() {
+        setIsLoading(false);
+        setIsContinueBtnClicked(false);
+        setFeedChat('');
+        setFileToUpload(null);
+        setTasksResponse([]);
+        setUploadButtonTitle('Upload Meeting Transcript');
+    };
+
     return (
         !isLoading ?
         <>
-        {isContinueBtnClicked ? <TasksBoard tasks={tasksResponse} /> : (
+        {isContinueBtnClicked ? <TasksBoard tasks={tasksResponse} onTasksFinished={handleTasksAdded} setLoading={setLoading} /> : (
             <div className={classes.container}>
                 <Typography variant="h4" component="h6" className={classes.title}>
                     I’m here to help you with the tasks.<br/>Please tell me what are your ideas<br/>or give me a meeting transcript

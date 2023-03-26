@@ -8,14 +8,23 @@ export default function TasksBoard(props) {
   const [tasks, setTasks] = React.useState(props.tasks);
 
   const addToJiraHandler = async () => {
-    toast.success('Hello World');
     console.log('Button clicked');
 
-    await Promise.all(
-      tasks.map((task) =>
-        jira.pushIssue({ title: task.title, label: task.label })
-      )
-    );
+    props.setLoading(true);
+
+    try {
+        await Promise.all(
+            tasks.map((task) =>
+              jira.pushIssue({ title: task.title, label: task.label })
+            )
+        );
+
+        toast.success('Tasks added!');
+    } catch (_) {
+        toast.error('Something went wrong!');
+    }
+
+    props.onTasksFinished();
   };
 
   function handleDelete(elemId) {
