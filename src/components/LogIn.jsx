@@ -49,26 +49,37 @@ function Login() {
 
   const handleConnectClick = async () => {
     if (urlValue.length > 1) {
-      store.set('url', urlValue);
-      const data = await jira.checkAuth();
+      try {
+        var url = urlValue;
+        url = url.replace("https://", "");
+        url = url.replace("http://", "");
+        url = url.replace("/", "");
+        url = url.replace("www.", "");
+        url = `https://${url}`
 
-      if (data?.accountId) {
-        store.set('user', data);
+        store.set('url', url);
+        const data = await jira.checkAuth();
 
-        jira.getProjects().then((reply) => {
-          const data = reply?.items?.map?.((item) => ({
-            title: item.title,
-            id: item.attributes.projectKey,
-          }));
+        if (data?.accountId) {
+            store.set('user', data);
 
-          store.set('projects', data || []);
-          store.set('project', data?.[0]?.id);
-        });
+            jira.getProjects().then((reply) => {
+            const data = reply?.items?.map?.((item) => ({
+                title: item.title,
+                id: item.attributes.projectKey,
+            }));
 
-        emit('LOGIN', data);
+            store.set('projects', data || []);
+            store.set('project', data?.[0]?.id);
+            });
+
+            emit('LOGIN', data);
+        }
+
+        chrome?.storage?.local?.set({ SP_STORE: store.data });
+      } catch (_) {
+        toast.error('Cannot retrieve session. Are you logged in?');
       }
-
-      chrome?.storage?.local?.set({ SP_STORE: store.data });
     } else {
       toast.error('Please input JIRA url.');
     }

@@ -4,6 +4,7 @@ import ExpandMoreSharpIcon from '@mui/icons-material/ExpandMoreSharp';
 import store from '$store';
 import { emit } from '$events';
 import jira from '$apis/jira';
+import { toast } from 'react-hot-toast';
 
 const projectOptions = [
   'Current Jira Project',
@@ -23,12 +24,11 @@ const SettingsContainer = () => {
 
   const handleChange = (event) => {
     setSelectedProject(event.target.value);
-    store.set('project', event.target.value);
   };
 
   const handleButtonClick = () => {
-    // Do something when the button is clicked
-    console.log('Button clicked!');
+    store.set('project', selectedProject);
+    toast.success("Project changed.")
   };
 
   const handleLogout = () => {
