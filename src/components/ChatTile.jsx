@@ -4,9 +4,8 @@ import React from 'react';
 const useStyles = makeStyles({
     container: {
         display: 'flex',
-        marginBottom: '5px',
         alignItems: 'center',
-        margin: '0 1rem',
+        margin: '0 1rem 1rem 1rem',
     },
     reversed: {
         flexDirection: 'row-reverse',
@@ -35,6 +34,11 @@ const useStyles = makeStyles({
         fontSize: '16px',
         marginLeft: '10px',
         marginRight: '10px',
+        maxWidth: 'calc(100% - 56px)',
+        textAlign: 'left',
+    },
+    messageRight: {
+        textAlign: 'right',
     }
 });
 
@@ -44,7 +48,7 @@ function ChatTile({ title, typing, left }) {
     return (
         <div className={`${styles.container} ${left ? '' : styles.reversed}`}>
             <div className={left ? styles.bubble : styles.bubbleRight}>{left ? 'S' : 'Me'}</div>
-            <span className={styles.message}>
+            <span className={`${styles.message} ${!left ? styles.messageRight : ''}`}>
                 {
                     typing ?
                         <span className={"loading"}>Typing</span>
