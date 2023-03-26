@@ -72,6 +72,22 @@ function FeedContainer() {
 
   const onContinueHandler = async () => {
     if (feedChat.length > 1) {
+      const response = await axios.post(
+        `${config.API_URL}/train-text/${store.get('project')}`,
+        {
+          text: feedChat,
+        },
+        { timeout: 60000 }
+      );
+
+      setIsLoading(false);
+
+      if (response.data.length > 0) {
+        setTasksResponse(response.data);
+        setIsContinueBtnClicked(true);
+      } else {
+        toast.error("I couldn't generate any tasks.");
+      }
     } else if (fileToUpload != null) {
       const form = new FormData();
       form.append('my_file', fileToUpload);
