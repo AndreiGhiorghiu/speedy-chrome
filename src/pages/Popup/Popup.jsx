@@ -22,11 +22,11 @@ const Popup = () => {
     <div className="App">
         <Toaster position='top-right' />
         <StickyHeader title={'SPEEDY'}/>
-        {/* <Login /> */}
-            {selected === 0 && <ChatContainer/>}
+        <Login />
+            {/* {selected === 0 && <ChatContainer/>}
             {selected === 1 && <FeedContainer/>}
             {selected === 2 && <SettingsContainer/>}
-      <BottomMenu onSelect={handleChange} selectedValue={value} />
+      <BottomMenu onSelect={handleChange} selectedValue={value} /> */}
     </div>
   );
 };

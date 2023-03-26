@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Logo from '../assets/img/logo.png';
+import { toast } from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff!important',
     },
     enabledButton: {
-       backgroundColor: '#2151C5!important',
+       backgroundColor: '#EA5254!important',
     },
     disabledButton: {
         backgroundColor: '#E15100!important',
@@ -37,27 +38,46 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
     const classes = useStyles();
 
+    const [urlValue, setUrlValue] = React.useState('');
+
+    const handleUrlChange = (event) => {
+        setUrlValue(event.target.value);
+    };
+
+    const handleConnectClick = () => {
+        if(urlValue.length > 1) {
+
+        } else {
+            toast.error("Please input JIRA url.")
+        }
+    };
+
     return (
         <div className={classes.container}>
             <Typography variant="h4" component="h6" className={classes.title}>
-                Welcome to Speedy Assistant. Please choose your platform
+                Welcome to Speedy Assistant
+            </Typography>
+
+            <span style={{fontSize: '15px', marginTop: '50px', marginBottom: '10px'}}>Please fill your JIRA url below:</span>
+            <Typography variant="h6" sx={{ maxWidth: '60%', backgroundColor: 'transparent', width: '100%', height: '40px', fontSize: '18px' }}>
+                <input
+                    type="text"
+                    autoComplete="off"
+                    autoFill="off"
+                    spellCheck="false"
+                    value={urlValue}
+                    placeholder={"example.atlassian.net"}
+                    onChange={handleUrlChange}
+                    style={{textAlign: 'center', height: '40px', color: 'white', width: 'calc(100% - 16px)', backgroundColor: 'transparent', fontSize: '16px', paddingLeft: '8px', paddingRight: '8px', border: '1px solid white', borderRadius: '10px'}}
+                />
             </Typography>
             <Button
                 variant="contained"
                 color="primary"
                 className={`${classes.button} ${classes.enabledButton}`}
-                href="https://jira.com"
-                target="_blank"
+                onClick={handleConnectClick}
             >
-                Log in with Jira
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                className={`${classes.button } ${classes.disabledButton}`}
-                disabled
-            >
-                Log in with Monday
+                CONNECT
             </Button>
             <Typography variant="body2" component="footer" className={classes.footer}>
                 <img style={{
