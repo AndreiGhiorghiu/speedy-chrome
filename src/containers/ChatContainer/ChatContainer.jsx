@@ -26,30 +26,74 @@ const useStyles = makeStyles({
 
 export default function ChatContainer() {
     const styles = useStyles();
+
+    const [chatMessages, setChatMessages] = useState([
+        {
+            id: 1,
+            message: "Hey there! How can I help you?",
+            typing: false
+        },
+    ]);
+
+    const messagesEndRef = React.useRef(null);
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
     const [chatInputValue, setChatInputValue] = useState('');
+
+    const [canSendMessage, setCanSendMessage] = useState(true);
+    
+    React.useEffect(() => {
+        scrollToBottom()
+    }, [chatMessages]);
 
     const handleChatInputChange = (event) => {
         setChatInputValue(event.target.value);
     };
 
     const handleChatSubmit = () => {
-      console.log("handle chat submit");
+        submitChatMessage();
     };
 
-    const chatMessages = [
-        {
-            id: 1,
-            message: "Hey there! How can I help you?"
-        },
-    ];
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          submitChatMessage();
+        }
+    };
+
+    function submitChatMessage() {
+        if (!canSendMessage) return;
+
+        setChatMessages([...chatMessages, 
+            {
+                id: chatMessages.length + 1,
+                message: chatInputValue,
+                typing: false
+            },
+            {
+                id: chatMessages.length + 2,
+                message: "empty",
+                typing: true
+            }
+        ])
+        setCanSendMessage(false);
+        setChatInputValue("");
+
+        // call
+        // update last chat with typing false and response 
+        // setCanSendMessage(true);
+    }
 
     return (
         <div style={{position:'relative', height: 'fit-content', flex: 1, paddingBottom: '66px', margin: '1rem 0'}}>
             <div style={{height: 'calc(100vh - 210px)', overflowY: 'scroll'}}>
                 {chatMessages.map((elem, index) => (<ChatTile
                     title={elem.message}
+                    typing={elem.typing}
                     left={index % 2 == 0 ? true : false}
                 />))}
+                <div ref={messagesEndRef} />
             </div>
             {
                 chatMessages.length > 2 ? null 
@@ -71,10 +115,12 @@ export default function ChatContainer() {
                     type="text"
                     autoComplete="off"
                     autoFill="off"
+                    readOnly={!canSendMessage}
                     spellCheck="false"
                     value={chatInputValue}
                     placeholder={"Who is the Android developer?"}
                     onChange={handleChatInputChange}
+                    onKeyDown={handleKeyDown}
                     style={{
                         height: '40px', 
                         margin: 0, 

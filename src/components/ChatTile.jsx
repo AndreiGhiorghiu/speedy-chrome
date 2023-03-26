@@ -38,14 +38,19 @@ const useStyles = makeStyles({
     }
 });
 
-function ChatTile({ title, left }) {
+function ChatTile({ title, typing, left }) {
     const styles = useStyles();
 
     return (
         <div className={`${styles.container} ${left ? '' : styles.reversed}`}>
             <div className={left ? styles.bubble : styles.bubbleRight}>{left ? 'S' : 'Me'}</div>
             <span className={styles.message}>
-                {title}
+                {
+                    typing ?
+                        <span className={"loading"}>Typing</span>
+                    :
+                        title
+                }
             </span>
         </div>
     );
