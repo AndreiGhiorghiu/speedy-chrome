@@ -34,8 +34,7 @@ export default function ChatContainer() {
   const [chatMessages, setChatMessages] = useState([
     {
       id: 0,
-      message:
-        'Hey there! How can I help you? asd asdsa adasda da as dasd as a asd asda sdas da da da',
+      message: 'Hey there! How can I help you?',
       typing: false,
     },
   ]);
