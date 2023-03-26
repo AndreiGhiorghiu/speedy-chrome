@@ -34,7 +34,8 @@ export default function ChatContainer() {
   const [chatMessages, setChatMessages] = useState([
     {
       id: 0,
-      message: 'Hey there! How can I help you? asd asdsa adasda da as dasd as a asd asda sdas da da da',
+      message:
+        'Hey there! How can I help you? asd asdsa adasda da as dasd as a asd asda sdas da da da',
       typing: false,
     },
   ]);
@@ -76,25 +77,28 @@ export default function ChatContainer() {
     if (chatInputValue.length < 2) return;
 
     setShouldAddMyMessage(true);
-    
+
     let inpValue = chatInputValue;
 
     await setCanSendMessage(false);
     await setChatInputValue('');
 
     try {
-        const response = await axios.post(`${config.API_URL}/ask/${store.get('project')}`, {question: inpValue}, {timeout: 60000});
-        
-        if (response.status == 200) {
-          setReceivedResponse(response.data.data);
-        } else {
-          setReceivedResponse('Error. Try again.');
-        }
+      const response = await axios.post(
+        `${config.API_URL}/ask/${store.get('project')}`,
+        { question: inpValue },
+        { timeout: 60000 }
+      );
 
-        setShouldAddNewMessage(true);
-        await setCanSendMessage(true);
-    }
-    catch {
+      if (response.status == 200) {
+        setReceivedResponse(response.data.data);
+      } else {
+        setReceivedResponse('Error. Try again.');
+      }
+
+      setShouldAddNewMessage(true);
+      await setCanSendMessage(true);
+    } catch {
       setReceivedResponse('Error. Try again.');
       setShouldAddNewMessage(true);
       setCanSendMessage(true);
@@ -115,7 +119,7 @@ export default function ChatContainer() {
         id: chatMessages.length + 1,
         message: 'empty',
         typing: true,
-      }
+      },
     ]);
 
     setShouldAddMyMessage(false);
@@ -130,7 +134,7 @@ export default function ChatContainer() {
 
     setChatMessages(shallowCopy);
     setShouldAddNewMessage(false);
-  }, [shouldAddNewMessage])
+  }, [shouldAddNewMessage]);
 
   return (
     <div

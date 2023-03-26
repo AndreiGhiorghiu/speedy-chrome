@@ -5,9 +5,14 @@ import store from '$store';
 
 import NewLogo from '../assets/img/newlogo.png';
 
-const StickyHeader = ({isLoggedIn}) => {
+const StickyHeader = ({ isLoggedIn }) => {
   const [projectName, setProjectName] = useState('');
 
+  on('LOGIN', (projectId) => {
+    const projects = store.get('projects');
+    const project = projects.find((item) => item.id === projectId);
+    setProjectName(project.title);
+  });
   on('SET_PROJECT', (projectId) => {
     const projects = store.get('projects');
     const project = projects.find((item) => item.id === projectId);
@@ -49,7 +54,7 @@ const StickyHeader = ({isLoggedIn}) => {
           color: 'rgba(159, 165, 174, .6)',
         }}
       >
-        {isLoggedIn ? (projectName || 'Speedy Assistant') : "Speedy Assistant"}
+        {isLoggedIn ? projectName || 'Speedy Assistant' : 'Speedy Assistant'}
       </span>
     </AppBar>
   );
