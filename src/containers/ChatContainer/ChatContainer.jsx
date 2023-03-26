@@ -48,6 +48,10 @@ export default function ChatContainer() {
 
   const [canSendMessage, setCanSendMessage] = useState(true);
 
+  const [test, setTest] = useState('initial');
+  const [firstCopyArr, setFirstCopyArr] = useState(false);
+  const [secondCopyArray, setSecondCopyArray] = useState(false);
+
   React.useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
@@ -69,19 +73,11 @@ export default function ChatContainer() {
   async function submitChatMessage() {
     if (!canSendMessage) return;
 
-    await setChatMessages([
-      ...chatMessages,
-      {
-        id: chatMessages.length,
-        message: chatInputValue,
-        typing: false,
-      },
-      {
-        id: chatMessages.length + 1,
-        message: 'empty',
-        typing: true,
-      },
-    ]);
+
+setTest('update');
+
+     // setChatMessages(firrstCopyArr);
+      setFirstCopyArr(true);
     
     let inpValue = chatInputValue;
 
@@ -90,13 +86,8 @@ export default function ChatContainer() {
 
 
     try {
-        //const response = await axios.post(`${config.API_URL}/ask/${store.get('project')}`, {question: inpValue}, {timeout: 60000});
-
-        const msgArr = [...chatMessages];
-        //msgArr[msgArr.length - 1].typing = false;
-      
-        await setChatMessages(msgArr);
-
+        const response = await axios.post(`${config.API_URL}/ask/${store.get('project')}`, {question: inpValue}, {timeout: 60000});
+        setSecondCopyArray(true);
         await setCanSendMessage(true);
     }
     catch {
@@ -105,6 +96,47 @@ export default function ChatContainer() {
         // setCanSendMessage(true);
     }
   }
+
+  React.useEffect(() => {
+      let shallowCopy = chatMessages.map((elem, index) => {
+          return {
+              id: elem.id,
+              message : elem.message,
+              typing: elem.typing
+          }
+
+      });
+
+      shallowCopy.push({
+              id: chatMessages.length,
+              message: chatInputValue,
+              typing: false,
+          },
+          {
+              id: chatMessages.length + 1,
+              message: 'empty',
+              typing: true,
+          });
+      setChatMessages(shallowCopy);
+
+  }, [firstCopyArr]);
+
+  React.useEffect(() => {
+      let shallowCopy = chatMessages.map((elem, index) => {
+          return {
+              id: elem.id,
+              message : elem.message,
+              typing: elem.typing
+          }
+
+      });
+      shallowCopy[shallowCopy.length - 1].typing = false;
+      setChatMessages(shallowCopy);
+  }, [secondCopyArray])
+
+  React.useEffect(() => {
+      console.log("use effect = ", chatMessages);
+  }, [chatMessages])
 
   return (
     <div
@@ -136,6 +168,7 @@ export default function ChatContainer() {
           &bull; How many vacation days I have ?
         </div>
       )}
+        <div>{test.toUpperCase()}</div>
       <div
         style={{
           position: 'relative',
